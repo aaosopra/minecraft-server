@@ -1,0 +1,3 @@
+Host django-server
+    HostName ${server_public_ip}
+    StrictHostKeyChecking no

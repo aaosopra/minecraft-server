@@ -1,0 +1,24 @@
+---
+
+- hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Create user
+      ansible.builtin.user:
+        name: aao
+        shell: /bin/bash
+    
+    - name: Add authorized key for aao
+      ansible.posix.authorized_key:
+        user: aao
+        state: present
+        key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBML78LOgM/vgTY/PFoec/XsujFKcBjMobitmp+P5Q01 emeaad\asolsen@AAP-5CG208925V
+    
+    - name: Allow aao to sudo without password
+      community.general.sudoers:
+        name: 10_aao
+        state: present
+        user: aao
+        commands: ALL
+        nopassword: true
