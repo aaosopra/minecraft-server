@@ -5,6 +5,7 @@
   vars_files:
     - ../vars/crafty.yaml
     - ../vars/minecraft.yaml
+    - ../vars/vault.yaml
   tasks:
     - name: Import Docker keyring
       ansible.builtin.get_url:
@@ -25,12 +26,12 @@
 
     - name: Add Docker Compose file
       ansible.builtin.template:
-        src: templates/docker-compose.yml.j2
+        src: ../templates/docker-compose.yml.j2
         dest: "{{ default_app_directory }}/docker-compose.yml"
 
     - name: Add Domeneshop credentials
       ansible.builtin.template:
-        src: templates/domeneshop_secret.j2
+        src: ../templates/domeneshop_secret.j2
         dest: "{{ default_domeneshop_secret_location  }}"
         mode: 0600
 
@@ -52,7 +53,7 @@
 
     - name: Add nginx configuration files
       ansible.builtin.template:
-        src: nginx.conf.j2
+        src: ../templates/nginx.conf.j2
         dest: "{{ default_app_directory }}/ngnix.conf"
 
     - name: Start Docker Compose
