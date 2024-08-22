@@ -1,0 +1,37 @@
+---
+
+- hosts: all
+  become: yes
+  vars_files:
+    - vars/minecraft.yaml
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.apt:
+        name: "{{ required_packages }}"
+        state: latest
+    
+    - name: Create app user
+      ansible.builtin.user:
+        name: "{{ default_user }}"
+        group: "{{ default_group }}"
+
+    - name: Create app directory
+      ansible.builtin.file:
+        path: "{{ default_app_directory }}"
+        owner: "{{ default_user }}"
+        group: "{{ default_group }}"
+        state: directory
+
+    - name: Download Minecraft source
+      ansible.builtin.get_url:
+        uri: "{{ default_download_url }}"
+        dest: "{{ default_app_directory }}"
+        owner: "{{ default_user }}"
+        group: "{{ default_group }}"
+    
+    - name: Accept EULA
+      ansible.builtin.templates:
+        src: templates/eula.txt.j2
+        dest: "{{ default_app_directory }}/eula.txt"
+        owner: "{{ default_user }}"
+        group: "{{ default_group }}"

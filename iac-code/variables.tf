@@ -39,7 +39,7 @@ variable "ip_range" {
 variable "playbook_url" {
   type        = string
   description = "Github content URL for Ansible Playbook"
-  default     = "https://raw.githubusercontent.com/aaosopra/django-course/main/ansible/playbooks/server_config.yaml"
+  default     = "https://raw.githubusercontent.com/aaosopra/minecraft-server/main/ansible/playbooks/server_config.yaml"
 }
 
 variable "home_path" {

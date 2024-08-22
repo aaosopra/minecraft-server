@@ -49,6 +49,19 @@ module "main" {
   tags = local.common_tags
 }
 
+resource "aws_security_group" "internet_out_sg" {
+  name   = "internet_out_sg"
+  vpc_id = module.main.vpc_id
+
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_security_group" "webapp_ssh_inbound_sg" {
   name        = "${var.prefix}-ssh-inbound"
   description = "Allow SSH from certain ranges"
@@ -86,7 +99,7 @@ resource "aws_instance" "app-instance" {
   ami                    = nonsensitive(module.ubuntu_22_04_latest.ami_id)
   instance_type          = "c5.xlarge"
   subnet_id              = module.main.public_subnets[0]
-  vpc_security_group_ids = [aws_security_group.webapp_ssh_inbound_sg.id, aws_security_group.app_inbound_sg.id]
+  vpc_security_group_ids = [aws_security_group.webapp_ssh_inbound_sg.id, aws_security_group.app_inbound_sg.id, aws_security_group.internet_out_sg.id]
   root_block_device {
     volume_size = 50
     volume_type = "gp3"
