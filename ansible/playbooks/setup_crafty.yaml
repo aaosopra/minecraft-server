@@ -26,4 +26,8 @@
     - name: Add Docker Compose file
       ansible.builtin.template:
         src: templates/docker-compose.yml.j2
-        dest: "{{ default_app_directory}}/docker-compose.yml"
+        dest: "{{ default_app_directory }}/docker-compose.yml"
+
+    - name: Start Crafty
+      community.docker.docker_compose:
+        project_src: "{{ default_app_directory }}"
