@@ -3,9 +3,11 @@
 required_packages:
   - default-jre
   - openjdk-21-jre-headless
+  - net-tools
 
 default_user: mc
 default_group: mc
 default_app_directory: "/opt/minecraft"
+default_memory_allocation: 3G
 
 default_download_url: https://piston-data.mojang.com/v1/objects/59353fb40c36d304f2035d51e7d6e6baa98dc05c/server.jar

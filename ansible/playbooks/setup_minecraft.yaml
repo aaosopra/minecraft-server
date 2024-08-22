@@ -13,7 +13,6 @@
     - name: Create app user
       ansible.builtin.user:
         name: "{{ default_user }}"
-        group: "{{ default_group }}"
 
     - name: Create app directory
       ansible.builtin.file:
@@ -24,14 +23,30 @@
 
     - name: Download Minecraft source
       ansible.builtin.get_url:
-        uri: "{{ default_download_url }}"
+        url: "{{ default_download_url }}"
         dest: "{{ default_app_directory }}"
         owner: "{{ default_user }}"
         group: "{{ default_group }}"
     
     - name: Accept EULA
-      ansible.builtin.templates:
+      ansible.builtin.template:
         src: templates/eula.txt.j2
         dest: "{{ default_app_directory }}/eula.txt"
         owner: "{{ default_user }}"
         group: "{{ default_group }}"
+
+    - name: Create systemd service
+      ansible.builtin.template:
+        src: templates/minecraft.service.j2
+        dest: /etc/systemd/system/minecraft.service
+      notify: Minecraft service
+
+  
+  handlers:
+    - name: Minecraft service
+      ansible.builtin.service:
+        name: minecraft
+        enabled: true
+        daemon-reload: true
+        state: restarted
+      
