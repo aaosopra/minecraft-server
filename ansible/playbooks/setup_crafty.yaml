@@ -3,8 +3,8 @@
 - hosts: localhost
   become: yes
   vars_files:
-    - vars/crafty.yaml
-    - vars/minecraft.yaml
+    - ../vars/crafty.yaml
+    - ../vars/minecraft.yaml
   tasks:
     - name: Import Docker keyring
       ansible.builtin.get_url:
@@ -28,6 +28,33 @@
         src: templates/docker-compose.yml.j2
         dest: "{{ default_app_directory }}/docker-compose.yml"
 
-    - name: Start Crafty
+    - name: Add Domeneshop credentials
+      ansible.builtin.template:
+        src: templates/domeneshop_secret.j2
+        dest: "{{ default_domeneshop_secret_location  }}"
+        mode: 0600
+
+    - name: Install certbot
+      ansible.builtin.pip:
+        name: "{{ default_certbot_package }}"
+        executable: pip3
+
+    - name: Register certbot
+      ansible.builtin.shell: |
+        certbot certonly \ 
+        --agree-tos \
+        -- email {{ default_certbot_email }}
+        --authenticator dns-domeneshop \
+        --dns-domeneshop-credentials {{ default_domeneshop_secret_location  }} \
+        --dns-domeneshop-propagation-seconds 120 -d {{ default_certbot_domain }}
+      args:
+        creates: "/etc/letsencrypt/live/{{ default_certbot_domain }}/cert.pem"
+
+    - name: Add nginx configuration files
+      ansible.builtin.template:
+        src: nginx.conf.j2
+        dest: "{{ default_app_directory }}/ngnix.conf"
+
+    - name: Start Docker Compose
       community.docker.docker_compose_v2:
         project_src: "{{ default_app_directory }}"

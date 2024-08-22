@@ -3,12 +3,12 @@
 - hosts: localhost
   become: yes
   vars_files:
-    - vars/minecraft.yaml
+    - ../vars/minecraft.yaml
   tasks:
     - name: Install dependencies
       ansible.builtin.apt:
         name: "{{ required_packages }}"
-        state: latest
+        state: present
     
     - name: Create app user
       ansible.builtin.user:

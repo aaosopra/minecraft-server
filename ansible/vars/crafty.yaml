@@ -1,0 +1,15 @@
+---
+
+docker_packages:
+  - docker-ce 
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+  - python3-docker
+
+default_container_name: crafty_container
+default_domeneshop_secret_location: /root/.domeneshop_secret
+default_certbot_package: certbot-dns-domeneshop
+
+default_certbot_domain: crafty.lunheimhosting.no

@@ -1,0 +1,22 @@
+
+ server {
+  listen 8080;
+  server_name {{ default_container_name }};
+  
+
+  ssl on;
+  ssl_certificate /etc/nginx/cert/nginx.crt;
+  ssl_certificate_key /etc/nginx/cert/nginx.key;
+  location / {
+    proxy_pass          http://localhost:8000/;
+     rewrite /(.*) /origin-d$1
+            proxy_pass http://localhost:8000;
+
+    
+  }  
+}
+# wordpress container via production_wp
+ server {
+  listen 443;
+  server_name {{ default_container_name }};
+}
