@@ -5,8 +5,8 @@ After=network-online.target
 
 [Service]
 # Ensure to set the correct user and working directory (installation directory of your server) here
-User="{{ default_user }}"
-WorkingDirectory="{{ default_app_directory }}"
+User={{ default_user }}
+WorkingDirectory={{ default_app_directory }}
 
 # You can customize the maximum amount of memory as well as the JVM flags here
 ExecStart=/usr/bin/java -Xmx{{ default_memory_allocation }} -Xms1024M -jar server.jar nogui
