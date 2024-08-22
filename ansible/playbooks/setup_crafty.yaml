@@ -29,5 +29,5 @@
         dest: "{{ default_app_directory }}/docker-compose.yml"
 
     - name: Start Crafty
-      community.docker.docker_compose:
+      community.docker.docker_compose_v2:
         project_src: "{{ default_app_directory }}"
