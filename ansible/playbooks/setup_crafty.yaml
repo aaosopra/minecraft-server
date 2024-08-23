@@ -24,9 +24,9 @@
         state: present
         update_cache: true
 
-    - name: Install Docker packages
+    - name: Install packages
       ansible.builtin.apt:
-        name: "{{ docker_packages }}"
+        name: "{{ crafty_packages }}"
         state: latest
 
     - name: Add Docker Compose file
