@@ -23,9 +23,9 @@ services:
     container_name: crafty_nginx
     volumes:
       - {{ default_app_directory }}/ngnix.conf:/etc/nginx/conf.d/default.conf
-      - "/etc/letsencrypt/live/{{ default_certbot_domain }}/fullchain.pem":/etc/nginx/cert/nginx.pem
-      - "/etc/letsencrypt/live/{{ default_certbot_domain }}/privkey.pem":/etc/nginx/cert/nginx.key
-      - "/etc/letsencrypt/live/{{ default_certbot_domain }}/cert.pem":/etc/nginx/cert/nginx.crt
+      - /etc/letsencrypt/live/{{ default_certbot_domain }}/fullchain.pem:/etc/nginx/cert/nginx.pem
+      - /etc/letsencrypt/live/{{ default_certbot_domain }}/privkey.pem:/etc/nginx/cert/nginx.key
+      - /etc/letsencrypt/live/{{ default_certbot_domain }}/cert.pem:/etc/nginx/cert/nginx.crt
     ports:
       - 8080:8080
       - 443:443

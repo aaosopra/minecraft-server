@@ -35,6 +35,18 @@
         dest: "{{ default_domeneshop_secret_location  }}"
         mode: 0600
 
+    - name: Add Update Domeneshop Script
+      ansible.builtin.template:
+        src: ../templates/update_domeneshop.sh.j2
+        dest: /opt/update_domeneshop.sh
+        mode: 0755
+
+    - name: Add update domeneshop cronjob
+      ansible.builtin.cron:
+        name: "Update IP for {{ default_certbot_domain  }}"
+        special_time: hourly
+        job: "bash /opt/update_domeneshop.sh"
+
     - name: Install certbot
       ansible.builtin.pip:
         name: "{{ default_certbot_package }}"
