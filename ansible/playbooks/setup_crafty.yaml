@@ -76,6 +76,7 @@
     - name: Create volume dirs
       ansible.builtin.file:
         path: "{{ default_app_directory }}{{ item }}"
+        state: directory
       loop: "{{ default_crafty_volumes }}"
 
     - name: Start Docker Compose
