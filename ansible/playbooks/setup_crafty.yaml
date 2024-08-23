@@ -61,7 +61,7 @@
       ansible.builtin.shell: |
         certbot certonly \ 
         --agree-tos \
-        --email {{ default_certbot_email }}
+        --email {{ default_certbot_email }} \
         --authenticator dns-domeneshop \
         --dns-domeneshop-credentials {{ default_domeneshop_secret_location  }} \
         --dns-domeneshop-propagation-seconds 120 -d {{ default_certbot_domain }}
