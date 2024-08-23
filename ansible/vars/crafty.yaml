@@ -13,3 +13,11 @@ default_domeneshop_secret_location: /root/.domeneshop_secret
 default_certbot_package: certbot-dns-domeneshop
 
 default_certbot_domain: crafty.lunheimhosting.no
+
+
+default_crafty_volumes:
+- /docker/backups
+- /docker/logs
+- /docker/servers
+- /docker/config
+- /docker/import

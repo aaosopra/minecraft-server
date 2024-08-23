@@ -68,6 +68,21 @@
         src: ../templates/nginx.conf.j2
         dest: "{{ default_app_directory }}/ngnix.conf"
 
+    - name: Create volume dirs
+      ansible.builtin.file:
+      path: "{{ default_app_directory }}{{ item }}"
+      loop: "{{ default_crafty_volumes }}"
+
     - name: Start Docker Compose
       community.docker.docker_compose_v2:
         project_src: "{{ default_app_directory }}"
+
+    - name: Get admin credentials
+      community.docker.docker_container_exec:
+        container: "{{ default_container_name }}"
+        command: "/usr/bin/cat app/config/default-creds.txt"
+      register: result
+
+    - name: Print Credentials
+      ansible.builtin.debug:
+        var: result.stdout

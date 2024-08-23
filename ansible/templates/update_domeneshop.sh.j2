@@ -2,3 +2,4 @@
 
 IP=$(wget -q https://api.ipify.org/ -O -)
 curl -u "{{ domeneshop_client_token }}:{{ domeneshop_client_secret }}" "https://api.domeneshop.no/v0/dyndns/update?hostname=crafty.lunheimhosting.no&myip=$IP"
+
