@@ -7,6 +7,11 @@
     - ../vars/minecraft.yaml
     - ../vars/vault.yaml
   tasks:
+    - name: Create app directory
+      ansible.builtin.file:
+        path: "{{ default_app_directory }}"
+        state: directory
+
     - name: Import Docker keyring
       ansible.builtin.get_url:
         url: https://download.docker.com/linux/ubuntu/gpg

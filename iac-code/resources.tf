@@ -126,5 +126,5 @@ resource "local_file" "ssh_config" {
     server_public_ip = aws_instance.app-instance.public_ip
   })
   filename        = "${var.home_path}/.ssh/config"
-  file_permission = 0400
+  file_permission = 0600
 }
