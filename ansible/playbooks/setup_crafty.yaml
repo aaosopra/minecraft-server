@@ -71,7 +71,7 @@
     - name: Add nginx configuration files
       ansible.builtin.template:
         src: ../templates/nginx.conf.j2
-        dest: "{{ default_app_directory }}/ngix.conf"
+        dest: "{{ default_app_directory }}/nginx.conf"
 
     - name: Create volume dirs
       ansible.builtin.file:
