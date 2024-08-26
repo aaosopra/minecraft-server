@@ -18,7 +18,9 @@ data "aws_availability_zones" "available" {}
 ##################################################################################
 
 module "ubuntu_22_04_latest" {
-  source = "github.com/andreswebs/terraform-aws-ami-ubuntu"
+  source          = "github.com/andreswebs/terraform-aws-ami-ubuntu"
+  ubuntu_version  = "24.04"
+  volume_type     = "ebs-gp3"
 }
 
 ##################################################################################

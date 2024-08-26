@@ -59,6 +59,7 @@
       ansible.builtin.pip:
         name: "{{ default_certbot_package }}"
         executable: pip3
+        extra_args: "--break-system-packages" #Need this because the package is not available through APT
 
     - name: Register certbot
       ansible.builtin.shell: |
