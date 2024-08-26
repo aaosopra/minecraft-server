@@ -52,6 +52,9 @@
         special_time: hourly
         job: "bash /opt/update_domeneshop.sh"
 
+    - name: Run Domeneshop update once
+      ansible.builtin.shell: /usr/bin/bash /opt/update_domeneshop.sh
+
     - name: Install certbot
       ansible.builtin.pip:
         name: "{{ default_certbot_package }}"
