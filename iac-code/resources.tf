@@ -78,6 +78,22 @@ resource "aws_security_group" "webapp_ssh_inbound_sg" {
   tags = local.common_tags
 }
 
+resource "aws_security_group" "webapp_https_inbound_sg" {
+  name        = "${var.prefix}-https-inbound"
+  description = "Allow HTTPS from certain ranges"
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [var.ip_range]
+  }
+
+  vpc_id = module.main.vpc_id
+
+  tags = local.common_tags
+}
+
 resource "aws_security_group" "app_inbound_sg" {
   name        = "${var.prefix}-inbound"
   description = "Allow inbound to minecraft"
@@ -99,7 +115,7 @@ resource "aws_instance" "app-instance" {
   ami                    = nonsensitive(module.ubuntu_22_04_latest.ami_id)
   instance_type          = "c5.xlarge"
   subnet_id              = module.main.public_subnets[0]
-  vpc_security_group_ids = [aws_security_group.webapp_ssh_inbound_sg.id, aws_security_group.app_inbound_sg.id, aws_security_group.internet_out_sg.id]
+  vpc_security_group_ids = [aws_security_group.webapp_ssh_inbound_sg.id, aws_security_group.app_inbound_sg.id, aws_security_group.internet_out_sg.id, aws_security_group.webapp_https_inbound_sg.id]
   root_block_device {
     volume_size = 50
     volume_type = "gp3"
