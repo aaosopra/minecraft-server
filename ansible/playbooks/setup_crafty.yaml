@@ -67,6 +67,7 @@
         --agree-tos \
         --email {{ default_certbot_email }} \
         --authenticator dns-domeneshop \
+        --non-interactive \
         --dns-domeneshop-credentials {{ default_domeneshop_secret_location  }} \
         --dns-domeneshop-propagation-seconds 120 -d {{ default_certbot_domain }}
       args:
